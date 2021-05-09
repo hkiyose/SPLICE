@@ -53,7 +53,7 @@ $ sh SPLICE_exp.sh <output directory of Step2> <output directory>
 | SAP18 | - | novel_exon_length | coding | - | \*,6,8,10,\*/\*,k,l,k,\*/21140681,21147186/\*,0,0,0,-35,0,0,0,0,\* | 8 | 0 | 9 |
 
 Notation of novel transcript
-![Notation of novel transcript](https://github.com/hkiyose/SPLICE/images/novelpng)
+![Notation of novel transcript](https://github.com/hkiyose/SPLICE/blob/master/images/novel.png)
 
 ## Example
 
