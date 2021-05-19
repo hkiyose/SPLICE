@@ -15,7 +15,7 @@ echo "Reference genome sequence; " $REF_SEQ
 echo "Directory of reference files; " $REF_DIR
 echo "=========================================="
 
-SRC=/home/hkiyose/src/SPLICE/src
+SRC=./src
 
 echo "python $SRC/add_exonnum.py $REF > $REF_DIR/`basename $REF`.exonnum"
 python $SRC/add_exonnum.py $REF > $REF_DIR/`basename $REF`.exonnum

@@ -11,9 +11,8 @@ echo "IN; " $IN
 echo "OUT; " $OUT
 echo "=========================================="
 
-SRC=/home/hkiyose/src/SPLICE/src
-
-CONFIG=/home/hkiyose/src/SPLICE/configure
+SRC=./src
+CONFIG=./configure
 . $CONFIG
 
 echo ">>> Merging tables (1/14)"

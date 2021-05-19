@@ -12,9 +12,8 @@ echo "FASTQ; " $FASTQ
 echo "OUT; " $OUT
 echo "=========================================="
 
-SRC=/home/hkiyose/src/SPLICE/src 
-
-CONFIG=/home/hkiyose/src/SPLICE/configure
+SRC=./src 
+CONFIG=./configure
 . $CONFIG
 
 echo ">>> Base quality filtering (1/20)"
