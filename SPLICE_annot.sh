@@ -196,4 +196,5 @@ echo ""
 
 rm -r $OUT/`basename $FASTQ`.bqf*
 
+
 echo "FINISH"

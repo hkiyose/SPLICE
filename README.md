@@ -64,6 +64,7 @@ Notation of novel transcript
 | 150 | 28.571 | UQCRFS1/YWHAE | chr19/chr17 | 29207585-29207585/1364879-1364879 | 86ada1... |
 | 29 | 7.143 | RPS6KA5/TMSB4X | chr14/chrX | 91060446-91060446/12977041-12977041 | 38a936... |
 | 12 | 5.128 | TMED10/VPS4B | chr14/chr18 | 75132140-75132140/63390367-63390367 | 1e0cbc... |
+
 breakpoint indicates the range after merging the neighboring breakpoints
 
 ## Example
