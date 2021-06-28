@@ -58,7 +58,7 @@ $ sh SPLICE_exp.sh <output directory of Step2> <output directory>
 Notation of novel transcript  
 ![Notation of novel transcript](https://github.com/hkiyose/SPLICE/blob/master/images/novel.png)
 
-`.fusion` - Output file of fusion transcript expression file (number of supporting reads) for each sample
+`.fusion` - Output file of fusion transcript expression levels (number of supporting reads) for each sample
 | Number of reads | Read frequency(%) | GeneA/B | ChrA/B | BreakpointA/B | Read IDs |
 | :----: | :----: | :----: | :----: | :----: | :----: |
 | 150 | 28.571 | UQCRFS1/YWHAE | chr19/chr17 | 29207585-29207585/1364879-1364879 | 86ada1... |
