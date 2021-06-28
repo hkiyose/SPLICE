@@ -141,8 +141,8 @@ echo ">>> Detect fusion gene candidates (16/20)"
 echo "python $SRC/det_fusion.py $REF_TRANSCRIPT $OUT/`basename $FASTQ`.bqf.sam.conv.fa.sam.conv2.annot2 $OUT/`basename $FASTQ`.bqf.cDNA.sam.conv $OUT/`basename $FASTQ`.bqf 15 0.8 > $OUT/`basename $FASTQ`.bqf.sam.conv.fa.sam.conv2.annot2.fusion"
 python $SRC/det_fusion.py $REF_TRANSCRIPT $OUT/`basename $FASTQ`.bqf.sam.conv.fa.sam.conv2.annot2 $OUT/`basename $FASTQ`.bqf.cDNA.sam.conv $OUT/`basename $FASTQ`.bqf 15 0.8 > $OUT/`basename $FASTQ`.bqf.sam.conv.fa.sam.conv2.annot2.fusion
 
-echo "python $SRC/det_fusion2.py $OUT/`basename $FASTQ`.bqf.sam.conv.fa.sam.conv2.annot2.fusion $MIN_FUSION_DIST | python $SRC/det_fusion3.py /dev/stdin 5 $MIN_FUSION_READ $MIN_FUSION_FREQ | sort -nr > $OUT/`basename $FASTQ`.bqf.sam.conv.fa.sam.conv2.annot2.fusion2"
-python $SRC/det_fusion2.py $OUT/`basename $FASTQ`.bqf.sam.conv.fa.sam.conv2.annot2.fusion $MIN_FUSION_DIST | python $SRC/det_fusion3.py /dev/stdin 5 $MIN_FUSION_READ $MIN_FUSION_FREQ | sort -nr > $OUT/`basename $FASTQ`.bqf.sam.conv.fa.sam.conv2.annot2.fusion2
+echo "python $SRC/det_fusion2.py $OUT/`basename $FASTQ`.bqf.sam.conv.fa.sam.conv2.annot2.fusion $MIN_FUSION_DIST | python $SRC/det_fusion3.py /dev/stdin $MAX_FUSION_BP_MERGE $MIN_FUSION_READ $MIN_FUSION_FREQ | sort -nr > $OUT/`basename $FASTQ`.bqf.sam.conv.fa.sam.conv2.annot2.fusion2"
+python $SRC/det_fusion2.py $OUT/`basename $FASTQ`.bqf.sam.conv.fa.sam.conv2.annot2.fusion $MIN_FUSION_DIST | python $SRC/det_fusion3.py /dev/stdin $MAX_FUSION_BP_MERGE $MIN_FUSION_READ $MIN_FUSION_FREQ | sort -nr > $OUT/`basename $FASTQ`.bqf.sam.conv.fa.sam.conv2.annot2.fusion2
 echo ""
 
 echo ">>> Add information on the number of alignment matches (Converted SAM(Transcriptome)) (17/20)"

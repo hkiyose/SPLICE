@@ -1,5 +1,7 @@
 # SPLICE
 
+Analysis pipeline for long-read RNA-seq data using Nanopore technology
+
 ## Requirement
 
 * python3
@@ -29,6 +31,7 @@ Edit the `configure` file
 * Apply the reference genome file (FASTA) to `REF_GENOME_FA`  
 * Apply the output `.exonnum` file to `REF_TRANSCRIPT`   
 * Apply the output `.exonnum.fa` file to`REF_TRANSCRIPT_FA`
+* Enter the path to minimap2 execution file to `MINIMAP2`
 
 ### Step 2: Annotation to reference transcriptome
 
@@ -44,7 +47,7 @@ $ sh SPLICE_exp.sh <output directory of Step2> <output directory>
 
 ## Output
 
-`expression.tsv`
+`expression.tsv` - Output file of transcript expression levels (number of supporting reads)
 
 | gene | transcript | known/novel | coding/non-coding | transcript length | novel information | sample1 | sample2 | sampleN |
 | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
@@ -54,6 +57,14 @@ $ sh SPLICE_exp.sh <output directory of Step2> <output directory>
 
 Notation of novel transcript  
 ![Notation of novel transcript](https://github.com/hkiyose/SPLICE/blob/master/images/novel.png)
+
+`.fusion` - Output file of fusion transcript expression file (number of supporting reads) for each sample
+| Number of reads | Read frequency(%) | GeneA/B | ChrA/B | BreakpointA/B | Read IDs |
+| :----: | :----: | :----: | :----: | :----: | :----: |
+| 150 | 28.571 | UQCRFS1/YWHAE | chr19/chr17 | 29207585-29207585/1364879-1364879 | 86ada1... |
+| 29 | 7.143 | RPS6KA5/TMSB4X | chr14/chrX | 91060446-91060446/12977041-12977041 | 38a936... |
+| 12 | 5.128 | TMED10/VPS4B | chr14/chr18 | 75132140-75132140/63390367-63390367 | 1e0cbc... |
+breakpoint indicates the range after merging the neighboring breakpoints
 
 ## Example
 
@@ -84,12 +95,13 @@ If you want to use different parameters, please change the configuration file.
 `MIN_SC_LEN` - Minimum length of the softclip region to be remapped (60)  
 `MQ_FILT` - Mapping quality cutoff (0)  
 `MIN_FUSION_DIST` - Minimum distance of each transcript in the fusion transcript (200000)  
+`MAX_FUSION_BP_MERGE` - Maximam distance to merge fusion gene breakpoints (5)  
 `MIN_FUSION_READ` - Minimum number of support reads for fusion transcripts (1)  
 `MIN_FUSION_FREQ` - Minimum frequency of the fusion transcript in the total amount of the gene (%) (0.1)  
 `MQ_FILT_NOVEL_EXON` - Mapping quality cutoff of novel exon (1)  
 `MIN_READ_NUM` - Minimum number of support reads (3)  
 `MIN_READ_FREQ` - Minimum frequency of the transcript in the total amount of the gene (%) (1)  
-`RANGE_SJ_EVA` - Maximum change of novel exon length for evaluate the error rate (20)
+`RANGE_SJ_EVA` - Maximum change of novel exon length for evaluate the error rate (20)  
 `ERR_RATE_FILT` - Mapping error rate cutoff at splicing junctino sites (%) (20)  
 `MIN_NOVEL_LEN_GAP` - Minimum change of novel exon length (5)  
 `MIN_NOVEL_EXON_LEN` - Minimum length of novel exon (60)  
