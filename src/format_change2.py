@@ -305,7 +305,7 @@ for line in f4:
 #		print("error_rate_l2: ", error_rate_l2, sep="\t")
 		error_rate_l3 = []
 		for i in range(len(error_rate_l2)):
-			error_rate_l3.append(round(error_rate_l2[i]/84,1))
+			error_rate_l3.append(round(error_rate_l2[i]/sample_count-3,1))
 #		print("error_rate_l3: ", error_rate_l3, sep="\t")
 		
 		max_error_rate = 0
