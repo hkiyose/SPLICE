@@ -1,12 +1,12 @@
-### execution files ###
+### execution files
 MINIMAP2="path to execution file of minimap2"
 
-### reference files ###
+### reference files
 REF_GENOME_FA="path to reference genome file (FASTQ)"
 REF_TRANSCRIPT="path to reference transcriptome file"
 REF_TRANSCRIPT_FA="path to reference transcriptome file (FASTA)"
 
-### parameters ###
+### parameters
 #params in SPLICE_annot.sh
 BQ_FILT=15
 MIN_SC_LEN=60
