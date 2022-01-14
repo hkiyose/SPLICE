@@ -164,4 +164,3 @@ rm $OUT/expression.table*
 rm $OUT/novel_exon.table*
 
 echo "OUTPUT: " $OUT/expression.tsv 
-

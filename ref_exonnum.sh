@@ -48,5 +48,4 @@ echo ""
 echo "rm $REF_DIR/`basename $REF_SEQ`.liner"
 rm $REF_DIR/`basename $REF_SEQ`.liner
 echo ""
-
 echo "FINISH!"
