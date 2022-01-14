@@ -1,14 +1,10 @@
 ### execution files ###
-#MINIMAP2="path to execution file of minimap2"
-MINIMAP2=/home/hkiyose/src/tools/minimap2-2.17_x64-linux/minimap2
+MINIMAP2="path to execution file of minimap2"
 
 ### reference files ###
-#REF_GENOME_FA="path to reference genome file (FASTQ)"
-#REF_TRANSCRIPT="path to reference transcriptome file"
-#REF_TRANSCRIPT_FA="path to reference transcriptome file (FASTA)"
-REF_GENOME_FA=/home/hkiyose/download/SPLICE_ref/hg38_AAV_HBV_HCV.fa
-REF_TRANSCRIPT=/home/hkiyose/download/SPLICE_ref/GENCODEv28_RefSeq.exonnum
-REF_TRANSCRIPT_FA=/home/hkiyose/download/SPLICE_ref/GENCODEv28_RefSeq.exonnum.fa
+REF_GENOME_FA="path to reference genome file (FASTQ)"
+REF_TRANSCRIPT="path to reference transcriptome file"
+REF_TRANSCRIPT_FA="path to reference transcriptome file (FASTA)"
 
 ### parameters ###
 #params in SPLICE_annot.sh
