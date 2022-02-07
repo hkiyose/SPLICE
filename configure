@@ -2,7 +2,7 @@
 MINIMAP2="path to execution file of minimap2"
 
 ### reference files
-REF_GENOME_FA="path to reference genome file (FASTQ)"
+REF_GENOME_FA="path to reference genome file (FASTA)"
 REF_TRANSCRIPT="path to reference transcriptome file"
 REF_TRANSCRIPT_FA="path to reference transcriptome file (FASTA)"
 
