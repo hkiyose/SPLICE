@@ -21,17 +21,17 @@ Download the reference transcriptome file from the UCSC genome browser (https://
 3. Select the desired database in the Track section and download the file.
 
 Numbering the exons of the reference transcriptome.  
-If you use files from two databases (e.g. GENCODE and RefSeq), sort them by gene name and transcript name, and merge identical transcripts.
+If you use files from two databases (e.g. GENCODE and RefSeq), sort them by gene name and transcript name, and remove redundant transcripts.
 ```
 $ cd <path to SPLICE>
 $ sh ref_exonnum.sh <path to reference transcriptome> <path to reference genome sequence (FASTA)> <output directory> 
 ```
 
 Edit the `configure` file  
-* Apply the reference genome file (FASTA) to `REF_GENOME_FA`  
-* Apply the output `.exonnum` file to `REF_TRANSCRIPT`   
-* Apply the output `.exonnum.fa` file to`REF_TRANSCRIPT_FA`
-* Enter the path to minimap2 execution file to `MINIMAP2`
+* The path to the reference genome file (FASTA) should be specified on the `REF_GENOME_FA` line 
+* The path to the output `.exonnum` file should be specified on `REF_TRANSCRIPT` line
+* The path to the output `.exonnum.fa` file should be specified on `REF_TRANSCRIPT_FA` line
+* The path to the minimap2 execution file should be specified on `MINIMAP2` line
 
 ### Step 2: Annotation to reference transcriptome
 
