@@ -39,10 +39,10 @@ Edit the `configure` file
 $ sh SPLICE_annot.sh <path to FASTQ> <output directory>
 ```
 
-### Step 3: Analysis of expression levels
-
+### Step 3 (Option for multiple analysis): Analysis of expression levels
+Move all '.annot' and '.novel_exon' files to single directory 
 ```
-$ sh SPLICE_exp.sh <output directory of Step2> <output directory>
+$ sh SPLICE_exp.sh <output directory of Step2 or directory of '.annot' and '.novel_exon' files (multi-sample analysis)> <output directory>
 ```
 
 ## Output
