@@ -89,6 +89,25 @@ Analysis of expression levels
 $ sh SPLICE_exp.sh ./example/annot ./example/exp
 ```
 
+## Installation and usage via Docker
+Install Docker in your computer, and build a Docker image with the following commands.
+```
+$ git clone https://github.com/hkiyose/SPLICE.git
+$ cd <path to SPLICE>
+$ docker build -t splice .
+```
+
+The following command mounts the host directory containing the data to the container.
+Refer to Step 1 of Usage to download the reference data.
+```
+$ docker run --rm -it \
+  -v <path to directory of reference transcriptome and referece genome sequence (FASTA)>:/ref \
+  -v <path to directory of sample data(FASTQ)>:/sample_input \
+  -v <path to output directory>:/sample_output \
+  splice
+```
+Then Run according to Usage.
+
 ## Parameter settings in configuration file
 If you want to use different parameters, please change the configuration file. 
 

@@ -1,5 +1,5 @@
 ### execution files
-MINIMAP2="path to execution file of minimap2"
+MINIMAP2=minimap2 #"path to execution file of minimap2"
 
 ### reference files
 REF_GENOME_FA="path to reference genome file (FASTA)"
