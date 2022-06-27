@@ -4,8 +4,9 @@ Analysis pipeline for long-read RNA-seq data using Nanopore technology
 
 ## Requirement
 
-* python3
+* python3 (v3.5 or higher)
 * minimap2 (v2.17 or higher)
+* luigi
 
 ## Input file
 
@@ -24,25 +25,93 @@ Numbering the exons of the reference transcriptome.
 If you use files from two databases (e.g. GENCODE and RefSeq), sort them by gene name and transcript name, and remove redundant transcripts.
 ```
 $ cd <path to SPLICE>
-$ sh ref_exonnum.sh <path to reference transcriptome> <path to reference genome sequence (FASTA)> <output directory> 
-```
+$ python ref_exonnum.py -h
+usage: ref_exonnum.py [-h] -i INPUT -g GENOME [-o OUTPUT] [-p PREFIX] [-w WORKERS] [--tmp TMP]
 
-Edit the `configure` file  
-* The path to the reference genome file (FASTA) should be specified on the `REF_GENOME_FA` line 
-* The path to the output `.exonnum` file should be specified on `REF_TRANSCRIPT` line
-* The path to the output `.exonnum.fa` file should be specified on `REF_TRANSCRIPT_FA` line
-* The path to the minimap2 execution file should be specified on `MINIMAP2` line
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        reference transcriptome (UCSC table browser output file)
+  -g GENOME, --genome GENOME
+                        reference genome sequence (FASTA)
+  -o OUTPUT, --output OUTPUT
+                        output directory
+  -p PREFIX, --prefix PREFIX
+                        prefix for the output files
+  -w WORKERS, --workers WORKERS
+                        number of threads
+  --tmp TMP             temporary directory
+```
 
 ### Step 2: Annotation to reference transcriptome
 
 ```
-$ sh SPLICE_annot.sh <path to FASTQ> <output directory>
+$ python annot.py -h
+usage: annot.py [-h] -i INPUT -g GENOME -r REF -p PREFIX [-o OUTPUT] [--tmp TMP] [-w WORKERS] [--bq_filt BQ_FILT]
+                [--min_sc_len MIN_SC_LEN] [--mq_filt MQ_FILT] [--min_fusion_dist MIN_FUSION_DIST]
+                [--max_fusion_bp_merge MAX_FUSION_BP_MERGE] [--min_fusion_read MIN_FUSION_READ]
+                [--min_fusion_freq MIN_FUSION_FREQ] [--mq_filt_novel_exon MQ_FILT_NOVEL_EXON]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        query sequence data (FASTQ)
+  -g GENOME, --genome GENOME
+                        reference genome sequence (FASTA)
+  -r REF, --ref REF     reference transcriptome file (output file of ref_exonnum.py)
+  -p PREFIX, --prefix PREFIX
+                        prefix for the output files
+  -o OUTPUT, --output OUTPUT
+                        output directory
+  --tmp TMP             temporary directory
+  -w WORKERS, --workers WORKERS
+                        number of threads
+  --bq_filt BQ_FILT     read quality cutoff. Minimum average base quality score (15)
+  --min_sc_len MIN_SC_LEN
+                        minimum length of the softclip region to be remapped (60)
+  --mq_filt MQ_FILT     mapping quality cutoff (0)
+  --min_fusion_dist MIN_FUSION_DIST
+                        minimum distance of each transcript in the fusion transcript (200000)
+  --max_fusion_bp_merge MAX_FUSION_BP_MERGE
+                        maximam distance to merge fusion gene breakpoints (5)
+  --min_fusion_read MIN_FUSION_READ
+                        minimum number of support reads for fusion transcripts (1)
+  --min_fusion_freq MIN_FUSION_FREQ
+                        minimum frequency of the fusion transcript in the total amount of the gene (percentage) (0.1)
+  --mq_filt_novel_exon MQ_FILT_NOVEL_EXON
+                        mapping quality cutoff of novel exon (1)
 ```
 
 ### Step 3: Analysis of expression levels (Option for multiple analysis)
-Move all `.annot` and `.novel_exon` files to single directory 
+
 ```
-$ sh SPLICE_exp.sh <output directory of Step2 or directory of `.annot` and `.novel_exon` files (multi-sample analysis)> <output directory>
+$ python exp.py -h
+usage: exp.py [-h] -i INPUT -r REF [-o OUTPUT] [--tmp TMP] [-w WORKERS] [--min_read_num MIN_READ_NUM]
+              [--min_read_freq MIN_READ_FREQ] [--range_sj_eva RANGE_SJ_EVA] [--err_rate_filt ERR_RATE_FILT]
+              [--min_novel_len_gap MIN_NOVEL_LEN_GAP] [--min_novel_exon_len MIN_NOVEL_EXON_LEN]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        input directory (output directory of annot.py)
+  -r REF, --ref REF     reference transcriptome file (output file of ref_exonnum.py)
+  -o OUTPUT, --output OUTPUT
+                        output directory ('./out/exp')
+  --tmp TMP             temporary directory ('./tmp/exp_tmp')
+  -w WORKERS, --workers WORKERS
+                        number of threads
+  --min_read_num MIN_READ_NUM
+                        minimum number of support reads (3)
+  --min_read_freq MIN_READ_FREQ
+                        minimum frequency of the transcript in the total amount of the gene (percentage) (1)
+  --range_sj_eva RANGE_SJ_EVA
+                        maximum change of novel exon length for evaluate the error rate (20)
+  --err_rate_filt ERR_RATE_FILT
+                        mapping error rate cutoff at splicing junctino sites (percentage) (20)
+  --min_novel_len_gap MIN_NOVEL_LEN_GAP
+                        minimum change of novel exon length (5)
+  --min_novel_exon_len MIN_NOVEL_EXON_LEN
+                        minimum length of novel exon (60)
 ```
 
 ## Output
@@ -73,20 +142,18 @@ Preparation of the reference transcriptome file
 ```
 $ git clone https://github.com/hkiyose/SPLICE
 $ cd SPLICE
-$ sh ref_exonnum.sh <path to reference transcriptome file> <path to reference genome sequence (FASTA)> ./example/ref
+$ python ref_exonnum.py -i ./example/gencode_v29_chr1.tsv -g <path to reference genome sequence (FASTA)>
 ```
-
-Edit the `configure` file as described above.
 
 Annotation to reference transcriptome.
 ```
-$ sh SPLICE_annot.sh ./example/fastq/sample1_test.fastq ./example/annot
-$ sh SPLICE_annot.sh ./example/fastq/sample2_test.fastq ./example/annot
+$ python annot.py -i ./example/fastq/sample1_test.fastq -g <path to reference genome sequence (FASTA)> -r ./out/ref_exonnum -p sample1 --tmp ./tmp/annot_tmp/sample1
+$ python annot.py -i ./example/fastq/sample2_test.fastq -g <path to reference genome sequence (FASTA)> -r ./out/ref_exonnum -p sample2 --tmp ./tmp/annot_tmp/sample2
 ```
 
 Analysis of expression levels
 ```
-$ sh SPLICE_exp.sh ./example/annot ./example/exp
+$ python exp.py -i ./out/annot -r ./out/ref_exonnum
 ```
 
 ## Installation and usage via Docker
@@ -107,24 +174,6 @@ $ docker run --rm -it \
   splice
 ```
 Then Run according to Usage.
-
-## Parameter settings in configuration file
-If you want to use different parameters, please change the configuration file. 
-
-`BQ_FILT` - Read quality cutoff. Minimum average base quality score (15)  
-`MIN_SC_LEN` - Minimum length of the softclip region to be remapped (60)  
-`MQ_FILT` - Mapping quality cutoff (0)  
-`MIN_FUSION_DIST` - Minimum distance of each transcript in the fusion transcript (200000)  
-`MAX_FUSION_BP_MERGE` - Maximam distance to merge fusion gene breakpoints (5)  
-`MIN_FUSION_READ` - Minimum number of support reads for fusion transcripts (1)  
-`MIN_FUSION_FREQ` - Minimum frequency of the fusion transcript in the total amount of the gene (%) (0.1)  
-`MQ_FILT_NOVEL_EXON` - Mapping quality cutoff of novel exon (1)  
-`MIN_READ_NUM` - Minimum number of support reads (3)  
-`MIN_READ_FREQ` - Minimum frequency of the transcript in the total amount of the gene (%) (1)  
-`RANGE_SJ_EVA` - Maximum change of novel exon length for evaluate the error rate (20)  
-`ERR_RATE_FILT` - Mapping error rate cutoff at splicing junctino sites (%) (20)  
-`MIN_NOVEL_LEN_GAP` - Minimum change of novel exon length (5)  
-`MIN_NOVEL_EXON_LEN` - Minimum length of novel exon (60)  
 
 ## License
 GPLv3

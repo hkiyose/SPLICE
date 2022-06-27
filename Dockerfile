@@ -7,6 +7,7 @@ RUN apt-get update \
     python3 \
     minimap2 \
     vim \
+    luigi \
   && apt-get -y clean \
   && rm -rf /var/lib/apt/lists/*
 
