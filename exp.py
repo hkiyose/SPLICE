@@ -2,7 +2,7 @@ import datetime
 import sys
 import os 
 import tools
-from os.path import join, basename
+from os.path import join, basename, exists
 import luigi
 from luigi.util import requires
 import subprocess
@@ -25,6 +25,12 @@ parser.add_argument("--min_novel_exon_len", help="minimum length of novel exon (
 
 
 args = parser.parse_args()
+
+if not os.path.exists(args.output):
+	os.makedirs(args.output)
+
+if not os.path.exists(args.tmp):
+	os.makedirs(args.tmp)
 
 #  Merging tables (1/14)
 class MergeTable(luigi.Task):

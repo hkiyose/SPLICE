@@ -2,7 +2,7 @@ import datetime
 import sys
 import os 
 import tools
-from os.path import join, basename
+from os.path import join, basename, exists
 import luigi
 from luigi.util import requires
 import argparse
@@ -17,6 +17,12 @@ parser.add_argument("-w", "--workers", help="number of threads", default="1")
 parser.add_argument("--tmp", help="temporary directory", default="./tmp/ref_exonnum_tmp")
 
 args = parser.parse_args()
+
+if not os.path.exists(args.output):
+	os.makedirs(args.output)
+
+if not os.path.exists(args.tmp):
+	os.makedirs(args.tmp)
 
 class AddExonNum(luigi.Task):
 	task_namespace = 'tasks'

@@ -2,7 +2,7 @@ import datetime
 import sys
 import os 
 import tools
-from os.path import join, basename
+from os.path import join, basename, exists
 import luigi
 from luigi.util import requires
 import subprocess
@@ -29,6 +29,12 @@ parser.add_argument("--min_fusion_freq", help="minimum frequency of the fusion t
 parser.add_argument("--mq_filt_novel_exon", help="mapping quality cutoff of novel exon (1)", default=1)
 
 args = parser.parse_args()
+
+if not os.path.exists(args.output):
+	os.makedirs(args.output)
+
+if not os.path.exists(args.tmp):
+	os.makedirs(args.tmp)
 
 # Base quality filtering (1/20)
 class BqFilt(luigi.Task):
