@@ -17,7 +17,7 @@ parser.add_argument("-p", "--prefix", help="prefix for the output files", requir
 parser.add_argument("-o", "--output", help="output directory", default="./out/annot")
 parser.add_argument("--tmp", help="temporary directory", default="./tmp/annot_tmp")
 parser.add_argument("-w", "--workers", help="number of threads", default="1")
-
+parser.add_argument("--minimap2", help="execution file of minimap2", default="minimap2")
 
 parser.add_argument("--bq_filt", help="read quality cutoff. Minimum average base quality score (15)", default=15)
 parser.add_argument("--min_sc_len", help="minimum length of the softclip region to be remapped (60)", default=60)
@@ -56,7 +56,7 @@ class Minimap2_1(luigi.Task):
 		return luigi.LocalTarget(self.input().path + ".sam")
 
 	def run(self):
-		subprocess.run(['minimap2 -ax splice --cs ' + args.genome + ' ' + self.input().path + ' -o ' + self.output().path], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+		subprocess.run([args.minimap2 + ' -ax splice --cs ' + args.genome + ' ' + self.input().path + ' -o ' + self.output().path], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
 # Convert the SAM(genome) format (3/20)
 @requires(Minimap2_1)
@@ -101,7 +101,7 @@ class Minimap2_2(luigi.Task):
 		return luigi.LocalTarget(self.input().path + ".sam")
 	
 	def run(self):
-		subprocess.run(['minimap2 -ax splice --cs ' + args.genome + ' ' + self.input().path + ' -o ' + self.output().path], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+		subprocess.run([args.minimap2 + ' -ax splice --cs ' + args.genome + ' ' + self.input().path + ' -o ' + self.output().path], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
 # Integrating mapped softclip regions into converted SAM (5/20)
 @requires(Minimap2_2)
@@ -163,7 +163,7 @@ class Minimap2_3(luigi.Task):
 		return luigi.LocalTarget(self.input().path + ".cDNA.sam")
 	
 	def run(self):
-		subprocess.run(['minimap2 -a --cs ' + args.ref + ".fa" + ' ' + self.input().path + ' -o ' + self.output().path], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+		subprocess.run([args.minimap2 + ' -a --cs ' + args.ref + ".fa" + ' ' + self.input().path + ' -o ' + self.output().path], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
 # Add the number of alignment matches (Converted SAM(Genome)/SAM(Transcriptome)) (9/20)	
 @requires(Minimap2_3)
@@ -417,7 +417,7 @@ class DetFusion_4(luigi.Task):
 		return luigi.LocalTarget(join(args.output, args.prefix + ".fusion"))
 	
 	def run(self):
-		subprocess.run(["sort -nr " + self.input().path + " > " + self.input().path + ".sort"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+		subprocess.run(["sort -nr " + self.input().path + " > " + self.output().path], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
 # Add information on the number of alignment matches (Converted SAM(Transcriptome)) (17/20)
 @requires(ConvSam6)

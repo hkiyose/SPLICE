@@ -4,7 +4,7 @@ Analysis pipeline for long-read RNA-seq data using Nanopore technology
 
 ## Requirement
 
-* python3 (v3.5 or higher)
+* python3 (v3.7 or higher)
 * minimap2 (v2.17 or higher)
 * luigi
 
@@ -66,6 +66,7 @@ optional arguments:
   --tmp TMP             temporary directory
   -w WORKERS, --workers WORKERS
                         number of threads
+  --minimap2 MINIMAP2   execution file of minimap2
   --bq_filt BQ_FILT     read quality cutoff. Minimum average base quality score (15)
   --min_sc_len MIN_SC_LEN
                         minimum length of the softclip region to be remapped (60)
